@@ -10,7 +10,7 @@
 ## Pre-requisites
 
 ### Register on VwC
-- Follow the [Step-by-Step Instruction to Register on CredenceID VwC Portal](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/`) to get started.
+- Follow the [Step-by-Step Instruction to Register on CredenceID VwC Portal](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Guide-to-Register-on-Verify-with-Credence-Portal) to get started.
 
 ### Generate SDK License Key
 - Use the [Step-by-Step Instructions to Generate SDK License Key](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Guide%E2%80%90to%E2%80%90Generate%E2%80%90License%E2%80%90Key) to obtain the required license for SDK integration.

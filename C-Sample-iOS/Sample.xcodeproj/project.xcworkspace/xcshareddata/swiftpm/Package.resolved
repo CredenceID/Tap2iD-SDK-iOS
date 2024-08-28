@@ -1,0 +1,24 @@
+{
+  "originHash" : "af39950638c7482f7b32f1c2bbd1c08ec484fa37a1e52c844a9e5258ffada938",
+  "pins" : [
+    {
+      "identity" : "openssl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/OpenSSL.git",
+      "state" : {
+        "revision" : "7405324f9b1a64a79e5fa3660d2eda901d1337f2",
+        "version" : "3.3.1000"
+      }
+    },
+    {
+      "identity" : "tap2id-verifiersdk-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CredenceID/Tap2iD-VerifierSDK-Swift.git",
+      "state" : {
+        "branch" : "Version-0.1",
+        "revision" : "8cd96923ccb4caa271c539e60887f7feb8749ef8"
+      }
+    }
+  ],
+  "version" : 3
+}

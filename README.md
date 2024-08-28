@@ -19,7 +19,7 @@
 - [Release Notes](https://github.com/CredenceID/Tap2iD-SDK-iOS/releases)
 - [API Documentation](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Tap2iD-SDK-API-Documentation)
 - [Integration Guide](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Guide-to-Integrate-Tap2iD-iOS-SDK)
-- [Sample App](app)
+- [Sample App](C-Sample-iOS)
 
 ---
 © 2024 Credence ID LLC. All rights reserved.

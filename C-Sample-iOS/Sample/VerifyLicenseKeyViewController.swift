@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CIdentitySwift
+import Tap2iDVerifierSDK
 
 class VerifyLicenseKeyViewController: UIViewController {
 

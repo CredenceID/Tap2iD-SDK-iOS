@@ -17,11 +17,10 @@
 		4710E78C2C46336100500F8D /* SampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710E78B2C46336100500F8D /* SampleUITests.swift */; };
 		4710E78E2C46336100500F8D /* SampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710E78D2C46336100500F8D /* SampleUITestsLaunchTests.swift */; };
 		47299B952C6B783200FADEEF /* VerifyLicenseKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47299B942C6B783200FADEEF /* VerifyLicenseKeyViewController.swift */; };
-		475A5C4F2C786C200089F604 /* OpenSSL in Frameworks */ = {isa = PBXBuildFile; productRef = 475A5C4E2C786C200089F604 /* OpenSSL */; };
 		47804FDA2C46A72500F5DB31 /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FD82C46A72500F5DB31 /* QRScannerViewController.swift */; };
 		47804FDB2C46A72500F5DB31 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FD92C46A72500F5DB31 /* QRScannerView.swift */; };
 		47804FDE2C46A74B00F5DB31 /* TestSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FDD2C46A74B00F5DB31 /* TestSDK.swift */; };
-		479A79DF2C7F7BB500207531 /* Tap2iD-VerifyerSDK-Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 479A79DE2C7F7BB500207531 /* Tap2iD-VerifyerSDK-Swift */; };
+		479D27702C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 479D276F2C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift */; };
 		47B8AB232C47F24A0015CA54 /* BLEObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8AB222C47F24A0015CA54 /* BLEObserver.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,8 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				475A5C4F2C786C200089F604 /* OpenSSL in Frameworks */,
-				479A79DF2C7F7BB500207531 /* Tap2iD-VerifyerSDK-Swift in Frameworks */,
+				479D27702C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,8 +193,7 @@
 			);
 			name = Sample;
 			packageProductDependencies = (
-				475A5C4E2C786C200089F604 /* OpenSSL */,
-				479A79DE2C7F7BB500207531 /* Tap2iD-VerifyerSDK-Swift */,
+				479D276F2C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift */,
 			);
 			productName = Sample;
 			productReference = 4710E7672C46335C00500F8D /* Sample.app */;
@@ -272,8 +269,7 @@
 			);
 			mainGroup = 4710E75E2C46335C00500F8D;
 			packageReferences = (
-				475A5C4D2C786C200089F604 /* XCRemoteSwiftPackageReference "OpenSSL" */,
-				479A79DD2C7F7BB500207531 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */,
+				479D276E2C8B03EF0079D308 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */,
 			);
 			productRefGroup = 4710E7682C46335C00500F8D /* Products */;
 			projectDirPath = "";
@@ -727,33 +723,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		475A5C4D2C786C200089F604 /* XCRemoteSwiftPackageReference "OpenSSL" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzyzanowskim/OpenSSL.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.3.1000;
-			};
-		};
-		479A79DD2C7F7BB500207531 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */ = {
+		479D276E2C8B03EF0079D308 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CredenceID/Tap2iD-VerifierSDK-Swift.git";
 			requirement = {
-				branch = "Version-0.1";
+				branch = "Version-1.0.0";
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		475A5C4E2C786C200089F604 /* OpenSSL */ = {
+		479D276F2C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 475A5C4D2C786C200089F604 /* XCRemoteSwiftPackageReference "OpenSSL" */;
-			productName = OpenSSL;
-		};
-		479A79DE2C7F7BB500207531 /* Tap2iD-VerifyerSDK-Swift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 479A79DD2C7F7BB500207531 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */;
+			package = 479D276E2C8B03EF0079D308 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */;
 			productName = "Tap2iD-VerifyerSDK-Swift";
 		};
 /* End XCSwiftPackageProductDependency section */

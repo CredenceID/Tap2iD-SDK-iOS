@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CIdentitySwift
+import Tap2iDVerifierSDK
 
 class TestSDK {
 

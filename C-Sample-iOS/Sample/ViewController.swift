@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 import CoreBluetooth
-import CIdentitySwift
+import Tap2iDVerifierSDK
 
 class ViewController: UIViewController {
     let testSDK = TestSDK()

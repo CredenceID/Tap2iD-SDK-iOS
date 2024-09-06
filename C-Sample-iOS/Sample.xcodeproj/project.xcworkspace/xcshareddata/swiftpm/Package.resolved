@@ -1,5 +1,5 @@
 {
-  "originHash" : "af39950638c7482f7b32f1c2bbd1c08ec484fa37a1e52c844a9e5258ffada938",
+  "originHash" : "0de5368a5d8da7cfe0ab2b0bafc2dac802371c1032a6b96b6fced96b2e277903",
   "pins" : [
     {
       "identity" : "openssl",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CredenceID/Tap2iD-VerifierSDK-Swift.git",
       "state" : {
-        "branch" : "Version-0.1",
-        "revision" : "8cd96923ccb4caa271c539e60887f7feb8749ef8"
+        "branch" : "Version-1.0.0",
+        "revision" : "4e4370d9bf31f54355f28847f67719c08c892809"
       }
     }
   ],

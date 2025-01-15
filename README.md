@@ -21,6 +21,9 @@
 - [Integration Guide](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Guide-to-Integrate-Tap2iD-iOS-SDK)
 - [Sample App](C-Sample-iOS)
 
+### Device Compatibility Overview: QRCode, Native NFC, and External NFC Reader
+![diagram](https://github.com/user-attachments/assets/ef57af75-5355-4a20-9d0e-b161db3a8341)
+
 ---
 © 2024 Credence ID LLC. All rights reserved.
 

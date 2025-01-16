@@ -20,7 +20,7 @@
 		47804FDA2C46A72500F5DB31 /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FD82C46A72500F5DB31 /* QRScannerViewController.swift */; };
 		47804FDB2C46A72500F5DB31 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FD92C46A72500F5DB31 /* QRScannerView.swift */; };
 		47804FDE2C46A74B00F5DB31 /* TestSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FDD2C46A74B00F5DB31 /* TestSDK.swift */; };
-		479D27702C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 479D276F2C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift */; };
+		478217EB2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 478217EA2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift */; };
 		47B8AB232C47F24A0015CA54 /* BLEObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8AB222C47F24A0015CA54 /* BLEObserver.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				479D27702C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift in Frameworks */,
+				478217EB2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,7 +193,7 @@
 			);
 			name = Sample;
 			packageProductDependencies = (
-				479D276F2C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift */,
+				478217EA2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift */,
 			);
 			productName = Sample;
 			productReference = 4710E7672C46335C00500F8D /* Sample.app */;
@@ -269,7 +269,7 @@
 			);
 			mainGroup = 4710E75E2C46335C00500F8D;
 			packageReferences = (
-				479D276E2C8B03EF0079D308 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */,
+				478217E92D3957EF0017020F /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */,
 			);
 			productRefGroup = 4710E7682C46335C00500F8D /* Products */;
 			projectDirPath = "";
@@ -723,20 +723,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		479D276E2C8B03EF0079D308 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */ = {
+		478217E92D3957EF0017020F /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CredenceID/Tap2iD-VerifierSDK-Swift.git";
+			repositoryURL = "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS";
 			requirement = {
-				branch = "Version-1.0.0";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		479D276F2C8B03EF0079D308 /* Tap2iD-VerifyerSDK-Swift */ = {
+		478217EA2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 479D276E2C8B03EF0079D308 /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-Swift" */;
+			package = 478217E92D3957EF0017020F /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */;
 			productName = "Tap2iD-VerifyerSDK-Swift";
 		};
 /* End XCSwiftPackageProductDependency section */

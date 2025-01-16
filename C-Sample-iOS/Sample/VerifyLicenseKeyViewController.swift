@@ -22,7 +22,7 @@ class VerifyLicenseKeyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        keyTextField.text = "CSQie5dcdBIcPv4aKVuMtJZLhtOIuMcqh9"
+        keyTextField.text = "CSPEZUyVGFVxyjMSmeE47neBFbPK8EvS5X"
         keyTextField.clearButtonMode = .always
 
         let deviceIdentifier = WebServiceSecurity().decryptCipher(valueToDecrypt: KeychainHelper.deviceIdentifier())
@@ -40,9 +40,9 @@ class VerifyLicenseKeyViewController: UIViewController {
             return
         }
 
-        testSDK.initSDK(apiKey: keyTextField.text ?? "") {[weak self] (error, message) in
+        testSDK.initSDK(apiKey: keyTextField.text ?? "") {[weak self] (error, message, profile) in
             guard let self = self else { return }
-            self.validityLabel.text = "\(message ?? "")"
+            self.validityLabel.text = "\(message ?? ""), profile = \(profile ?? "---")"
             self.errorLabel.text = error
 
             if error != nil {

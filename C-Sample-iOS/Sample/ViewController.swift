@@ -13,6 +13,7 @@ import Tap2iDVerifierSDK
 class ViewController: UIViewController {
     let testSDK = TestSDK()
 
+    @IBOutlet weak var nfcButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var engagementLabel: UILabel!
@@ -21,7 +22,7 @@ class ViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     var bleState: CBManagerState = .unknown
     @IBOutlet weak var messageLabel: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         testSDK.delegate = self
@@ -30,6 +31,7 @@ class ViewController: UIViewController {
         let deviceIdentifier = WebServiceSecurity().decryptCipher(valueToDecrypt: KeychainHelper.deviceIdentifier())
 
         messageLabel.text = "Tap2iD-Verify-SDK \n\nSample Version : \(UtilityManager.appVersion()) (\(UtilityManager.appBuildNumber())) \n\nDevice ID : \n\(deviceIdentifier ?? "-")"
+        nfcButton.isEnabled = UIScreen.main.traitCollection.userInterfaceIdiom == .phone
     }
 
     @IBAction func scanButtonClicked(_ sender: UIButton) {
@@ -41,9 +43,38 @@ class ViewController: UIViewController {
         present(qrVC, animated: true)
     }
 
+    @IBAction func nfcButtonAction(_ sender: UIButton) {
+        textView.text = ""
+        imageView.image = UIImage.init(systemName: "rectangle.connected.to.line.below")
+        contentView.isHidden = false
+        engagementLabel.text = "NFC Engagement"
+        testSDK.startNFCEngagement() { error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
+                }
+            }
+        }
+    }
+
+    @IBAction func nfcReaderButtonAction(_ sender: UIButton) {
+        textView.text = ""
+        imageView.image = UIImage.init(systemName: "rectangle.connected.to.line.below")
+        contentView.isHidden = false
+        engagementLabel.text = "NFC Engagement"
+        testSDK.startNFCReaderEngagement(readerDelegate: self) { error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
+                }
+            }
+        }
+    }
+
     @IBAction func doneAction(_ sender: UIButton) {
         contentView.isHidden = true
         textView.text = ""
+        testSDK.stopMonitoring()
     }
 }
 
@@ -121,6 +152,8 @@ extension ViewController: Tap2iDVerifySDKDelegate {
             return "\((started ? "Started" : "Completed")) : READ_MDOC_RESPONSE"
         case .PARSE_MDOC_RESPONSE:
             return "\((started ? "Started" : "Completed")) : PARSE_MDOC_RESPONSE"
+        case .VALIDATE_MDOC_RESPONSE:
+            return "\((started ? "Started" : "Completed")) : VALIDATE_MDOC_RESPONSE"
         @unknown default:
             return "\((started ? "Started" : "Completed")) : default"
         }
@@ -151,8 +184,6 @@ extension ViewController: Tap2iDVerifySDKDelegate {
     }
 }
 
-
-
 class UtilityManager {
 
     static func appVersion() -> String {
@@ -179,5 +210,31 @@ class UtilityManager {
 
     static func getVersionWithBuildNumber() -> String {
         return "Version \(appVersion())"
+    }
+}
+
+extension ViewController: NfcExternalReaderDelegate {
+    func didDetectReaders() {
+        DispatchQueue.main.async {
+            self.textView.text = "\(self.textView.text ?? "")\n\n Reader Detected"
+        }
+    }
+
+    func didDisconnectFromReader() {
+        DispatchQueue.main.async {
+            self.textView.text = "\(self.textView.text ?? "")\n\n Disconnect From Reader"
+        }
+    }
+
+    func didDetectSmartCard() {
+        DispatchQueue.main.async {
+            self.textView.text = "\(self.textView.text ?? "")\n\n Smart Card Detected"
+        }
+    }
+
+    func didDisconnectFromSmartCard() {
+        DispatchQueue.main.async {
+            self.textView.text = "\(self.textView.text ?? "")\n\n Disconnect From Smart Card "
+        }
     }
 }

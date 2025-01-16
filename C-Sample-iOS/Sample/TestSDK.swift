@@ -13,10 +13,10 @@ class TestSDK {
     var stateUpdate: String = ""
     var delegate: Tap2iDVerifySDKDelegate?
 
-    func initSDK(apiKey: String, result: @escaping (String?,String?) -> Void) {
+    func initSDK(apiKey: String, result: @escaping (String?,String?, String?) -> Void) {
         let sdkConfig = CoreSdkConfig(apiKey: apiKey)
-        Tap2iDVerifySDK.shared.initSdk(config: sdkConfig) { (error, message) in
-            result(error, message)
+        Tap2iDVerifySDK.shared.initSdk(config: sdkConfig) { (error, message, profile) in
+            result(error, message, profile)
         }
     }
 
@@ -26,21 +26,39 @@ class TestSDK {
             result(error)
         }
     }
+
+    func startNFCEngagement(result: @escaping (Error?) -> Void) {
+        let error = Tap2iDVerifySDK.shared.verifyMdoc(engagementConfig: .nfc, delegate: self)
+        if let error = error {
+            result(error)
+        }
+    }
+
+    func startNFCReaderEngagement(readerDelegate: NfcExternalReaderDelegate, result: @escaping (Error?) -> Void) {
+        let error = Tap2iDVerifySDK.shared.verifyMdoc(engagementConfig: .nfcExternalReader, delegate: self, readerDelegate: readerDelegate)
+        if let error = error {
+            result(error)
+        }
+    }
+
+    func stopMonitoring() {
+        Tap2iDVerifySDK.shared.stopMonitoring()
+    }
 }
 
 extension TestSDK: Tap2iDVerifySDKDelegate {
     func onVerificationStageStarted(stage: VerificationStage) {
         delegate?.onVerificationStageStarted(stage: stage)
     }
-    
+
     func onVerificationStageError(stage: VerificationStage?, error: CoreCredenceErrorStruct?) {
         delegate?.onVerificationStageError(stage: stage, error: error)
     }
-    
+
     func onVerificationStageCompleted(stage: VerificationStage) {
         delegate?.onVerificationStageCompleted(stage: stage)
     }
-    
+
     func onVerificationCompleted(result: MdlAttributes, validationResult: [CoreCredenceErrorStruct]) {
         delegate?.onVerificationCompleted(result: result, validationResult: validationResult)
     }

@@ -16,17 +16,19 @@ class VerifyLicenseKeyViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var validityLabel: UILabel!
+    @IBOutlet weak var versionLabel: UILabel!
 
     let testSDK = TestSDK()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        keyTextField.text = "CSPEZUyVGFVxyjMSmeE47neBFbPK8EvS5X"
+        keyTextField.text = "CSP47bODDtBaMk7zXPWm0YwE1jVaulhfNp"
         keyTextField.clearButtonMode = .always
 
         let deviceIdentifier = WebServiceSecurity().decryptCipher(valueToDecrypt: KeychainHelper.deviceIdentifier())
         messageLabel.text = "Tap2iD-Verify-SDK \n\nSample Version : \(UtilityManager.appVersion()) (\(UtilityManager.appBuildNumber())) \n\nDevice ID : \n\(deviceIdentifier ?? "-")"
+        versionLabel.text = UtilityManager.appVersion()
     }
 
     @IBAction func verifyAction(_ sender: UIButton) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470104002DF0154900F53F5C /* Tap2iD-VerifyerSDK-Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 470103FF2DF0154900F53F5C /* Tap2iD-VerifyerSDK-Swift */; };
 		4710E76B2C46335C00500F8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710E76A2C46335C00500F8D /* AppDelegate.swift */; };
 		4710E76D2C46335C00500F8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710E76C2C46335C00500F8D /* SceneDelegate.swift */; };
 		4710E76F2C46335C00500F8D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710E76E2C46335C00500F8D /* ViewController.swift */; };
@@ -20,7 +21,6 @@
 		47804FDA2C46A72500F5DB31 /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FD82C46A72500F5DB31 /* QRScannerViewController.swift */; };
 		47804FDB2C46A72500F5DB31 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FD92C46A72500F5DB31 /* QRScannerView.swift */; };
 		47804FDE2C46A74B00F5DB31 /* TestSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FDD2C46A74B00F5DB31 /* TestSDK.swift */; };
-		478217EB2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 478217EA2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift */; };
 		47B8AB232C47F24A0015CA54 /* BLEObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8AB222C47F24A0015CA54 /* BLEObserver.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +72,7 @@
 		47804FD82C46A72500F5DB31 /* QRScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
 		47804FD92C46A72500F5DB31 /* QRScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
 		47804FDD2C46A74B00F5DB31 /* TestSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSDK.swift; sourceTree = "<group>"; };
+		478E27532DB7740E0024D891 /* Sample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sample.entitlements; sourceTree = "<group>"; };
 		47B8AB222C47F24A0015CA54 /* BLEObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEObserver.swift; sourceTree = "<group>"; };
 		47C30E692C639E1600CC6818 /* Sample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sample-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				478217EB2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift in Frameworks */,
+				470104002DF0154900F53F5C /* Tap2iD-VerifyerSDK-Swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +127,7 @@
 		4710E7692C46335C00500F8D /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				478E27532DB7740E0024D891 /* Sample.entitlements */,
 				47804FDC2C46A72900F5DB31 /* QRCode */,
 				4710E76A2C46335C00500F8D /* AppDelegate.swift */,
 				4710E76C2C46335C00500F8D /* SceneDelegate.swift */,
@@ -193,7 +195,7 @@
 			);
 			name = Sample;
 			packageProductDependencies = (
-				478217EA2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift */,
+				470103FF2DF0154900F53F5C /* Tap2iD-VerifyerSDK-Swift */,
 			);
 			productName = Sample;
 			productReference = 4710E7672C46335C00500F8D /* Sample.app */;
@@ -269,7 +271,7 @@
 			);
 			mainGroup = 4710E75E2C46335C00500F8D;
 			packageReferences = (
-				478217E92D3957EF0017020F /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */,
+				470103FE2DF0154900F53F5C /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */,
 			);
 			productRefGroup = 4710E7682C46335C00500F8D /* Products */;
 			projectDirPath = "";
@@ -502,9 +504,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Sample/Sample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = YSLUPAK974;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -514,6 +517,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "C Sample";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "To Read MDL";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Our app uses bluetooth to find, connect an";
 				INFOPLIST_KEY_NSCameraUsageDescription = "dfsdfsdf sfsdfsdfds";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -548,9 +553,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Sample/Sample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = YSLUPAK974;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -560,6 +566,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "C Sample";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "To Read MDL";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Our app uses bluetooth to find, connect an";
 				INFOPLIST_KEY_NSCameraUsageDescription = "dfsdfsdf sfsdfsdfds";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -723,20 +731,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		478217E92D3957EF0017020F /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */ = {
+		470103FE2DF0154900F53F5C /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		478217EA2D3957EF0017020F /* Tap2iD-VerifyerSDK-Swift */ = {
+		470103FF2DF0154900F53F5C /* Tap2iD-VerifyerSDK-Swift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 478217E92D3957EF0017020F /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */;
+			package = 470103FE2DF0154900F53F5C /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */;
 			productName = "Tap2iD-VerifyerSDK-Swift";
 		};
 /* End XCSwiftPackageProductDependency section */

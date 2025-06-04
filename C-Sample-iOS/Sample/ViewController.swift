@@ -186,9 +186,11 @@ extension ViewController: Tap2iDVerifySDKDelegate {
 
 class UtilityManager {
 
+    private static let sdkVersion = "1.0.2"
+
     static func appVersion() -> String {
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            return appVersion
+            return "iOS-SDK(\(sdkVersion)-AppVersion : \(appVersion))"
         }
         return ""
     }

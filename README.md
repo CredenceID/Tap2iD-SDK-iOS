@@ -19,6 +19,7 @@
 - [Release Notes](https://github.com/CredenceID/Tap2iD-SDK-iOS/releases)
 - [API Documentation](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Tap2iD-SDK-API-Documentation)
 - [Integration Guide](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Guide-to-Integrate-Tap2iD-iOS-SDK)
+- [Guide for Credential Verification Errors](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Guide-for-Credential-Verification-Errors)
 - [Sample App](C-Sample-iOS)
 
 ### Device Compatibility Overview: QRCode, Native NFC, and External NFC Reader

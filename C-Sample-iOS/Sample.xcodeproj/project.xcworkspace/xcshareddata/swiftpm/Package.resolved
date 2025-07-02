@@ -1,5 +1,5 @@
 {
-  "originHash" : "99d2df8ddee6c14fbb7ec6c2a99639de4c6b3b5c8e31e8cdd4b9a93aa008bbb6",
+  "originHash" : "ad65bc04f44a7a6a3cda1dfb9766b68e87865bd260272c352fb22b973716a555",
   "pins" : [
     {
       "identity" : "openssl",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS",
       "state" : {
-        "revision" : "1a3e688c540f2c995b8a55b752cb4c37eab188e0",
-        "version" : "1.0.2"
+        "revision" : "33a108acd3e1f22fc0a82bf118e96032dc47a40d",
+        "version" : "1.0.3"
       }
     }
   ],

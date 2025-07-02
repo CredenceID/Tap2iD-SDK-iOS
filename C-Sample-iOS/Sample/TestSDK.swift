@@ -47,6 +47,10 @@ class TestSDK {
 }
 
 extension TestSDK: Tap2iDVerifySDKDelegate {
+    func onVerificationCompleted(mdocAttributes: Tap2iDVerifierSDK.MdlAttributes, verificationResult: Tap2iDVerifierSDK.ValidationResult) {
+        delegate?.onVerificationCompleted(mdocAttributes: mdocAttributes, verificationResult: verificationResult)
+    }
+
     func onVerificationStageStarted(stage: VerificationStage) {
         delegate?.onVerificationStageStarted(stage: stage)
     }
@@ -57,10 +61,6 @@ extension TestSDK: Tap2iDVerifySDKDelegate {
 
     func onVerificationStageCompleted(stage: VerificationStage) {
         delegate?.onVerificationStageCompleted(stage: stage)
-    }
-
-    func onVerificationCompleted(result: MdlAttributes, validationResult: [CoreCredenceErrorStruct]) {
-        delegate?.onVerificationCompleted(result: result, validationResult: validationResult)
     }
 }
 

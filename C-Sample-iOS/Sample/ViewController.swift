@@ -28,9 +28,7 @@ class ViewController: UIViewController {
         testSDK.delegate = self
         bleObserver = BLEObserver()
         bleObserver.startCentralManager()
-        let deviceIdentifier = WebServiceSecurity().decryptCipher(valueToDecrypt: KeychainHelper.deviceIdentifier())
-
-        messageLabel.text = "Tap2iD-Verify-SDK \n\nSample Version : \(UtilityManager.appVersion()) (\(UtilityManager.appBuildNumber())) \n\nDevice ID : \n\(deviceIdentifier ?? "-")"
+        messageLabel.text = ""
         nfcButton.isEnabled = UIScreen.main.traitCollection.userInterfaceIdiom == .phone
     }
 
@@ -104,6 +102,23 @@ extension ViewController {
 }
 
 extension ViewController: Tap2iDVerifySDKDelegate {
+    func onVerificationCompleted(mdocAttributes: Tap2iDVerifierSDK.MdlAttributes, verificationResult: Tap2iDVerifierSDK.ValidationResult) {
+        var errorString = ""
+        verificationResult.validationErrors.forEach { error in
+            if errorString == "" {
+                errorString = "\n\n Validation error = "
+            }
+            errorString += "\n\(error.messageForVerifyPortal)"
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.textView.text = "\(self?.textView.text ?? "")\n\n Verification Completed"
+            self?.textView.text = "\(self?.textView.text ?? "")\(self?.getDisplayString(models: ResultHelperTest.prepareDisplayModel(model: mdocAttributes)) ?? "") \(errorString)"
+
+            self?.textView.text = "\(self?.textView.text ?? "")\n\n\(verificationResult.description)"
+
+            self?.imageView.image = self?.preparePortrait(portrait: mdocAttributes.portrait)
+        }
+    }
 
     func onVerificationStageStarted(stage: VerificationStage) {
         DispatchQueue.main.async {
@@ -120,21 +135,6 @@ extension ViewController: Tap2iDVerifySDKDelegate {
     func onVerificationStageCompleted(stage: VerificationStage) {
         DispatchQueue.main.async {
             self.textView.text = "\(self.textView.text ?? "")\n \(self.getStageString(stage: stage, started: false))"
-        }
-    }
-
-    func onVerificationCompleted(result: MdlAttributes, validationResult: [CoreCredenceErrorStruct]) {
-        var errorString = ""
-        validationResult.forEach { error in
-            if errorString == "" {
-                errorString = "\n\n Validation error = "
-            }
-            errorString += "\n\(error.messageForVerifyPortal)"
-        }
-        DispatchQueue.main.async { [weak self] in
-            self?.textView.text = "\(self?.textView.text ?? "")\n\n Verification Completed"
-            self?.textView.text = "\(self?.textView.text ?? "")\(self?.getDisplayString(models: ResultHelperTest.prepareDisplayModel(model: result)) ?? "") \(errorString)"
-            self?.imageView.image = self?.preparePortrait(portrait: result.portrait)
         }
     }
 

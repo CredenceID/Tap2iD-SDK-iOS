@@ -84,12 +84,6 @@
                                 <color key="textColor" systemColor="systemGreenColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.2.2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0b-iu-OpP">
-                                <rect key="frame" x="20" y="749.66666666666663" width="353" height="14.333333333333371"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -99,11 +93,9 @@
                             <constraint firstItem="dpX-dh-neK" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.6" id="Isx-ey-6KG"/>
                             <constraint firstItem="dpX-dh-neK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.5" id="LiI-o9-dmK"/>
                             <constraint firstItem="R8h-b2-tSC" firstAttribute="top" secondItem="kbi-7T-8jc" secondAttribute="bottom" constant="10" id="OvK-7O-to1"/>
-                            <constraint firstAttribute="trailing" secondItem="b0b-iu-OpP" secondAttribute="trailing" constant="20" id="RYI-8z-Zhg"/>
                             <constraint firstItem="aM1-9T-yOw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="SU2-OF-fbb"/>
                             <constraint firstItem="ZWb-x2-efR" firstAttribute="top" secondItem="aM1-9T-yOw" secondAttribute="bottom" constant="20" id="ScZ-7g-Ph5"/>
                             <constraint firstItem="aM1-9T-yOw" firstAttribute="top" secondItem="3tR-95-lLI" secondAttribute="bottom" constant="60" id="XIg-fc-bP5"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="b0b-iu-OpP" secondAttribute="bottom" constant="20" id="ZSK-by-NWM"/>
                             <constraint firstItem="3tR-95-lLI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZgO-Ot-P5B"/>
                             <constraint firstItem="3tR-95-lLI" firstAttribute="top" secondItem="R8h-b2-tSC" secondAttribute="bottom" constant="50" id="adf-en-snI"/>
                             <constraint firstItem="kbi-7T-8jc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="fM8-lC-P3t"/>
@@ -113,7 +105,6 @@
                             <constraint firstItem="kbi-7T-8jc" firstAttribute="top" secondItem="dpX-dh-neK" secondAttribute="bottom" constant="30" id="rkl-ma-aHq"/>
                             <constraint firstAttribute="trailing" secondItem="aM1-9T-yOw" secondAttribute="trailing" constant="10" id="sr7-98-gk1"/>
                             <constraint firstItem="dpX-dh-neK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="u0S-KA-dDf"/>
-                            <constraint firstItem="b0b-iu-OpP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="zZQ-aU-1NK"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jhn-YP-VLU"/>
@@ -124,7 +115,6 @@
                         <outlet property="keyTextField" destination="kbi-7T-8jc" id="DWl-Pg-wEo"/>
                         <outlet property="messageLabel" destination="aM1-9T-yOw" id="heZ-j1-yrK"/>
                         <outlet property="validityLabel" destination="ZWb-x2-efR" id="6hH-Ol-bHJ"/>
-                        <outlet property="versionLabel" destination="b0b-iu-OpP" id="14e-y7-YYa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

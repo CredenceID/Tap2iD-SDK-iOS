@@ -28,7 +28,8 @@ class ViewController: UIViewController {
         testSDK.delegate = self
         bleObserver = BLEObserver()
         bleObserver.startCentralManager()
-        messageLabel.text = ""
+        let deviceIdentifier = WebServiceSecurity().decryptCipher(valueToDecrypt: KeychainHelper.deviceIdentifier())
+        messageLabel.text = "Tap2iD-Verify-SDK \n\nSample Version : \(UtilityManager.appVersion()) (\(UtilityManager.appBuildNumber())) \n\nDevice ID : \n\(deviceIdentifier ?? "-")"
         nfcButton.isEnabled = UIScreen.main.traitCollection.userInterfaceIdiom == .phone
     }
 
@@ -80,10 +81,12 @@ extension ViewController: QRCodeScannerDelegate {
     func qrCodeScannerResult(qrCodeResult: String?, error: String?) {
         contentView.isHidden = false
         engagementLabel.text = "QRCode Engagement"
-        testSDK.startQrEngagement(capturedQr: qrCodeResult ?? "Test") { error in
-            if error != nil {
-                DispatchQueue.main.async {
-                    self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
+        DispatchQueue.global().async {
+            self.testSDK.startQrEngagement(capturedQr: qrCodeResult ?? "Test") { error in
+                if error != nil {
+                    DispatchQueue.main.async {
+                        self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
+                    }
                 }
             }
         }
@@ -97,7 +100,6 @@ extension ViewController {
                 self?.bleState = state
             }
             .store(in: &cancellables)
-
     }
 }
 
@@ -108,14 +110,13 @@ extension ViewController: Tap2iDVerifySDKDelegate {
             if errorString == "" {
                 errorString = "\n\n Validation error = "
             }
-            errorString += "\n\(error.messageForVerifyPortal)"
+            errorString += "\n\(error.errorMessage)"
         }
+
         DispatchQueue.main.async { [weak self] in
             self?.textView.text = "\(self?.textView.text ?? "")\n\n Verification Completed"
             self?.textView.text = "\(self?.textView.text ?? "")\(self?.getDisplayString(models: ResultHelperTest.prepareDisplayModel(model: mdocAttributes)) ?? "") \(errorString)"
-
             self?.textView.text = "\(self?.textView.text ?? "")\n\n\(verificationResult.description)"
-
             self?.imageView.image = self?.preparePortrait(portrait: mdocAttributes.portrait)
         }
     }
@@ -186,7 +187,7 @@ extension ViewController: Tap2iDVerifySDKDelegate {
 
 class UtilityManager {
 
-    private static let sdkVersion = "1.0.2"
+    private static let sdkVersion = "1.0.4"
 
     static func appVersion() -> String {
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {

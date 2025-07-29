@@ -21,7 +21,6 @@ class VerifyLicenseKeyViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         keyTextField.text = "CSP47bODDtBaMk7zXPWm0YwE1jVaulhfNp"
         keyTextField.clearButtonMode = .always
 
@@ -47,6 +46,7 @@ class VerifyLicenseKeyViewController: UIViewController {
 
             if error != nil {
                 self.buttonVerify.isEnabled = true
+                self.validityLabel.text = ""
                 return
             }
             self.buttonNext.isEnabled = true

@@ -56,7 +56,7 @@ extension QRScannerViewController: QAScannerViewDelegate {
     }
 
     func closeView(result: String?, error: String?) {
-        dismiss(animated: true)
+        dismiss(animated: false)
         if let result = result {
             delegate?.qrCodeScannerResult(qrCodeResult: result, error: nil)
         }else{

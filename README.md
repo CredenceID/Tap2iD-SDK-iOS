@@ -18,7 +18,7 @@ Available for Android, iOS, and Windows desktop, the SDK allows seamless integra
 ## Pre-requisites
 
 ### Complete your portal registration and generate the SDK license key required to begin integration
-- Follow the [SDK Onboarding Guide: Portal Registration & Key Generation](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/SDK-Onboarding-Guide:-Portal-Registration-&-Key-Generation) to get started.
+- Follow the [SDK Onboarding Guide: Verify with Credence Portal Registration & Key Generation](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Prerequisites:-Verify-with-Credence-Portal-Registration-&-Key-Generation) to get started.
 
 
 ### Documentation

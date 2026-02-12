@@ -3,7 +3,7 @@
 ![Banner iOS](https://github.com/user-attachments/assets/c70923d3-fa04-4706-82c5-f6334fe866c3)
 
 
-****Credence ID’s Tap2iD SDK** is a standards-based digital identity verification SDK within the Verify with Credence (VwC) platform. It enables secure verification of multiple ISO-compliant mobile credentials, including:
+**Credence ID’s Tap2iD SDK** is a standards-based digital identity verification SDK within the Verify with Credence (VwC) platform. It enables secure verification of multiple ISO-compliant mobile credentials, including:
 
 Mobile Driving Licenses (mDL) – ISO/IEC 18013.1
 

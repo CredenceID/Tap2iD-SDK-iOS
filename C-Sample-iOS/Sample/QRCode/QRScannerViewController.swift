@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol QRCodeScannerDelegate {
-    func qrCodeScannerResult(qrCodeResult: String?, error: String?)
+    func qrCodeScannerResult(qrCodeResult: String?,pdf417: String?, error: String?)
 }
 
 class QRScannerViewController: UIViewController {
@@ -44,24 +45,26 @@ class QRScannerViewController: UIViewController {
 
 extension QRScannerViewController: QAScannerViewDelegate {
     func qrScanningDidFail() {
-        self.closeView(result: nil, error: "Scanning Failed. Please try again")
+        self.closeView(result: nil, pdf417: nil, error: "Scanning Failed. Please try again")
     }
 
-    func qrScanningSucceededWithCode(_ code: String?) {
-        self.closeView(result: code, error: nil)
+    func qrScanningSucceededWithCode(_ code: String?, pdf417: String?) {
+        self.closeView(result: code, pdf417: pdf417, error: nil)
     }
 
     func qrScanningDidStop() {
 //        self.closeView(result: nil, error: nil)
     }
 
-    func closeView(result: String?, error: String?) {
+    func closeView(result: String?, pdf417: String?, error: String?) {
         dismiss(animated: false)
-        if let result = result {
-            delegate?.qrCodeScannerResult(qrCodeResult: result, error: nil)
+        if let result {
+            delegate?.qrCodeScannerResult(qrCodeResult: result, pdf417: nil, error: nil)
+        }else if let pdf417 {
+            delegate?.qrCodeScannerResult(qrCodeResult: nil, pdf417: pdf417, error: nil)
         }else{
             dismiss(animated: true) { [weak self] in
-                self?.delegate?.qrCodeScannerResult(qrCodeResult: nil, error: error)
+                self?.delegate?.qrCodeScannerResult(qrCodeResult: nil, pdf417: nil, error: error)
             }
         }
     }

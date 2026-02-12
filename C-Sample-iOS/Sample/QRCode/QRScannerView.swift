@@ -11,7 +11,7 @@ import AVFoundation
 
 protocol QAScannerViewDelegate: AnyObject {
     func qrScanningDidFail()
-    func qrScanningSucceededWithCode(_ code: String?)
+    func qrScanningSucceededWithCode(_ code: String?, pdf417: String?)
     func qrScanningDidStop()
 }
 
@@ -82,7 +82,7 @@ extension QRScannerView {
         if captureSession?.canAddOutput(metadataOutput) ?? false {
             captureSession?.addOutput(metadataOutput)
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [.qr]
+            metadataOutput.metadataObjectTypes = [.qr, .pdf417]
         } else {
             scanningDidFail()
             return
@@ -99,8 +99,8 @@ extension QRScannerView {
         captureSession = nil
     }
 
-    func found(code: String) {
-        scannerDelegate?.qrScanningSucceededWithCode(code)
+    func found(code: String?, pdf417: String?) {
+        scannerDelegate?.qrScanningSucceededWithCode(code, pdf417: pdf417)
     }
 }
 
@@ -113,7 +113,11 @@ extension QRScannerView: AVCaptureMetadataOutputObjectsDelegate {
            let stringValue = readableObject.stringValue  {
             qrCodeStringValue = stringValue
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            if metadataObject.type == .pdf417 {
+                found(code: nil, pdf417: qrCodeStringValue)
+            } else {
+                found(code: qrCodeStringValue, pdf417: nil)
+            }
         }
-        found(code: qrCodeStringValue)
     }
 }

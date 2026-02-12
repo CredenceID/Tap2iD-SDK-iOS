@@ -21,10 +21,10 @@ class VerifyLicenseKeyViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        keyTextField.text = "CSP47bODDtBaMk7zXPWm0YwE1jVaulhfNp"
+        keyTextField.text = "CSg7HoiSJrnrF2DO7Khd1BYvyRYtt3Pn8u"
         keyTextField.clearButtonMode = .always
 
-        let deviceIdentifier = WebServiceSecurity().decryptCipher(valueToDecrypt: KeychainHelper.deviceIdentifier())
+        let deviceIdentifier = testSDK.getDeviceIdentifier()
         messageLabel.text = "Tap2iD-Verify-SDK \n\nSample Version : \(UtilityManager.appVersion()) (\(UtilityManager.appBuildNumber())) \n\nDevice ID : \n\(deviceIdentifier ?? "-")"
     }
 

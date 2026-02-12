@@ -28,9 +28,20 @@ class ViewController: UIViewController {
         testSDK.delegate = self
         bleObserver = BLEObserver()
         bleObserver.startCentralManager()
-        let deviceIdentifier = WebServiceSecurity().decryptCipher(valueToDecrypt: KeychainHelper.deviceIdentifier())
+        let deviceIdentifier = testSDK.getDeviceIdentifier()
         messageLabel.text = "Tap2iD-Verify-SDK \n\nSample Version : \(UtilityManager.appVersion()) (\(UtilityManager.appBuildNumber())) \n\nDevice ID : \n\(deviceIdentifier ?? "-")"
         nfcButton.isEnabled = UIScreen.main.traitCollection.userInterfaceIdiom == .phone
+        setupTextView()
+    }
+
+    func setupTextView() {
+        textView.backgroundColor = .white // Force white background
+        textView.isEditable = false
+
+        // This prevents iOS from trying to "adapt" the colors for dark mode
+        if #available(iOS 13.0, *) {
+            textView.overrideUserInterfaceStyle = .light
+        }
     }
 
     @IBAction func scanButtonClicked(_ sender: UIButton) {
@@ -78,14 +89,24 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: QRCodeScannerDelegate {
-    func qrCodeScannerResult(qrCodeResult: String?, error: String?) {
+    func qrCodeScannerResult(qrCodeResult: String?, pdf417: String?, error: String?) {
         contentView.isHidden = false
         engagementLabel.text = "QRCode Engagement"
         DispatchQueue.global().async {
-            self.testSDK.startQrEngagement(capturedQr: qrCodeResult ?? "Test") { error in
-                if error != nil {
-                    DispatchQueue.main.async {
-                        self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
+            if let pdf417 {
+                self.testSDK.startPdfEngagement(pdf417: pdf417) { error in
+                    if error != nil {
+                        DispatchQueue.main.async {
+                            self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
+                        }
+                    }
+                }
+            }else{
+                self.testSDK.startQrEngagement(capturedQr: qrCodeResult ?? "Test") { error in
+                    if error != nil {
+                        DispatchQueue.main.async {
+                            self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
+                        }
                     }
                 }
             }
@@ -104,20 +125,25 @@ extension ViewController {
 }
 
 extension ViewController: Tap2iDVerifySDKDelegate {
-    func onVerificationCompleted(mdocAttributes: Tap2iDVerifierSDK.MdlAttributes, verificationResult: Tap2iDVerifierSDK.ValidationResult) {
-        var errorString = ""
-        verificationResult.validationErrors.forEach { error in
-            if errorString == "" {
-                errorString = "\n\n Validation error = "
-            }
-            errorString += "\n\(error.errorMessage)"
-        }
+    func onVerificationCompleted(verificationResult: VerificationResult?) {
+        guard let result = verificationResult else { return }
 
-        DispatchQueue.main.async { [weak self] in
-            self?.textView.text = "\(self?.textView.text ?? "")\n\n Verification Completed"
-            self?.textView.text = "\(self?.textView.text ?? "")\(self?.getDisplayString(models: ResultHelperTest.prepareDisplayModel(model: mdocAttributes)) ?? "") \(errorString)"
-            self?.textView.text = "\(self?.textView.text ?? "")\n\n\(verificationResult.description)"
-            self?.imageView.image = self?.preparePortrait(portrait: mdocAttributes.portrait)
+        // 1. Generate HTML
+        let htmlContent = result.toHTMLString()
+
+        // 2. Render to AttributedString (on background thread for performance)
+        DispatchQueue.global(qos: .userInitiated).async {
+            let data = Data(htmlContent.utf8)
+            let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+                .documentType: NSAttributedString.DocumentType.html,
+                .characterEncoding: String.Encoding.utf8.rawValue
+            ]
+
+            let attributedString = try? NSAttributedString(data: data, options: options, documentAttributes: nil)
+
+            DispatchQueue.main.async { [weak self] in
+                self?.textView.attributedText = attributedString
+            }
         }
     }
 
@@ -129,7 +155,7 @@ extension ViewController: Tap2iDVerifySDKDelegate {
 
     func onVerificationStageError(stage: VerificationStage?, error: CoreCredenceErrorStruct?) {
         DispatchQueue.main.async {
-            self.textView.text = "\(self.textView.text ?? "")\n\n Error = \(error?.messageForVerifyPortal ?? "Unknown error")"
+            self.textView.text = "\(self.textView.text ?? "")\n\n Error = \(error?.errorMessage ?? "Unknown error")"
         }
     }
 
@@ -155,26 +181,11 @@ extension ViewController: Tap2iDVerifySDKDelegate {
             return "\((started ? "Started" : "Completed")) : PARSE_MDOC_RESPONSE"
         case .VALIDATE_MDOC_RESPONSE:
             return "\((started ? "Started" : "Completed")) : VALIDATE_MDOC_RESPONSE"
+        case .PDF417:
+            return "\((started ? "Started" : "Completed")) : PDF417"
         @unknown default:
             return "\((started ? "Started" : "Completed")) : default"
         }
-    }
-
-    private func getDisplayString(models: ([IdCustomResultModelTest],[IdCustomResultModelTest])) -> String {
-        var returnString = "\n"
-
-        let model1 = models.0
-        let model2 = models.1
-
-        for model in model1 {
-            returnString += "\n" + model.title + "  =  " + (model.value ?? "-")
-        }
-
-        for model in model2 {
-            returnString += "\n" + model.title + "  =  " + (model.value ?? "-")
-        }
-
-        return returnString
     }
 
     private func preparePortrait(portrait: String?) -> UIImage? {
@@ -182,37 +193,6 @@ extension ViewController: Tap2iDVerifySDKDelegate {
             return image
         }
         return nil
-    }
-}
-
-class UtilityManager {
-
-    private static let sdkVersion = "1.0.4"
-
-    static func appVersion() -> String {
-        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            return "iOS-SDK(\(sdkVersion)-AppVersion : \(appVersion))"
-        }
-        return ""
-    }
-
-    static func osVersion() -> String {
-        return UIDevice.current.systemVersion
-    }
-
-    static func appBuildNumber() -> String {
-        if let appVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-            return appVersion
-        }
-        return ""
-    }
-
-    static func generateHashValueFor(input: String) -> String {
-        return String(input.hashValue)
-    }
-
-    static func getVersionWithBuildNumber() -> String {
-        return "Version \(appVersion())"
     }
 }
 
@@ -240,4 +220,18 @@ extension ViewController: NfcExternalReaderDelegate {
             self.textView.text = "\(self.textView.text ?? "")\n\n Disconnect From Smart Card "
         }
     }
+}
+
+extension String {
+    var data: Data? {
+       let data = NSMutableData(capacity: self.count)
+       let regex = try? NSRegularExpression(pattern: "[0-9a-f]{1,2}", options: .caseInsensitive)
+       let range = NSRange(location: 0, length: count)
+       regex?.enumerateMatches(in: self, options: [], range: range) { match, _, _ in
+           let byteString = (self as NSString).substring(with: match!.range)
+           var num = UInt8(byteString, radix: 16)
+           data?.append(&num, length: 1)
+       }
+       return data as? Data
+   }
 }

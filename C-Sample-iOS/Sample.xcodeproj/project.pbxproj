@@ -21,6 +21,8 @@
 		47804FDA2C46A72500F5DB31 /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FD82C46A72500F5DB31 /* QRScannerViewController.swift */; };
 		47804FDB2C46A72500F5DB31 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FD92C46A72500F5DB31 /* QRScannerView.swift */; };
 		47804FDE2C46A74B00F5DB31 /* TestSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47804FDD2C46A74B00F5DB31 /* TestSDK.swift */; };
+		47943D632F3DCBBB00FD9B6D /* HtmlHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47943D622F3DCBBB00FD9B6D /* HtmlHelper.swift */; };
+		47943D652F3DCC3D00FD9B6D /* UtilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47943D642F3DCC3B00FD9B6D /* UtilityManager.swift */; };
 		47B8AB232C47F24A0015CA54 /* BLEObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8AB222C47F24A0015CA54 /* BLEObserver.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		47804FD92C46A72500F5DB31 /* QRScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
 		47804FDD2C46A74B00F5DB31 /* TestSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSDK.swift; sourceTree = "<group>"; };
 		478E27532DB7740E0024D891 /* Sample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sample.entitlements; sourceTree = "<group>"; };
+		47943D622F3DCBBB00FD9B6D /* HtmlHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlHelper.swift; sourceTree = "<group>"; };
+		47943D642F3DCC3B00FD9B6D /* UtilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityManager.swift; sourceTree = "<group>"; };
 		47B8AB222C47F24A0015CA54 /* BLEObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEObserver.swift; sourceTree = "<group>"; };
 		47C30E692C639E1600CC6818 /* Sample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sample-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +136,8 @@
 				4710E76A2C46335C00500F8D /* AppDelegate.swift */,
 				4710E76C2C46335C00500F8D /* SceneDelegate.swift */,
 				4710E76E2C46335C00500F8D /* ViewController.swift */,
+				47943D642F3DCC3B00FD9B6D /* UtilityManager.swift */,
+				47943D622F3DCBBB00FD9B6D /* HtmlHelper.swift */,
 				47804FDD2C46A74B00F5DB31 /* TestSDK.swift */,
 				47B8AB222C47F24A0015CA54 /* BLEObserver.swift */,
 				47299B942C6B783200FADEEF /* VerifyLicenseKeyViewController.swift */,
@@ -316,6 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47943D632F3DCBBB00FD9B6D /* HtmlHelper.swift in Sources */,
 				47B8AB232C47F24A0015CA54 /* BLEObserver.swift in Sources */,
 				47804FDA2C46A72500F5DB31 /* QRScannerViewController.swift in Sources */,
 				4710E76F2C46335C00500F8D /* ViewController.swift in Sources */,
@@ -323,6 +330,7 @@
 				4710E76D2C46335C00500F8D /* SceneDelegate.swift in Sources */,
 				47804FDE2C46A74B00F5DB31 /* TestSDK.swift in Sources */,
 				47804FDB2C46A72500F5DB31 /* QRScannerView.swift in Sources */,
+				47943D652F3DCC3D00FD9B6D /* UtilityManager.swift in Sources */,
 				47299B952C6B783200FADEEF /* VerifyLicenseKeyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,7 +515,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sample/Sample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = YSLUPAK974;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -531,7 +539,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.credenceid.ios.SDK.sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -556,7 +564,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sample/Sample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = YSLUPAK974;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -580,7 +588,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.credenceid.ios.SDK.sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -735,8 +743,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.4;
+				branch = "Version-2.0.0";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

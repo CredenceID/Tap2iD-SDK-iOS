@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -277,7 +277,7 @@
 			);
 			mainGroup = 4710E75E2C46335C00500F8D;
 			packageReferences = (
-				4731B3122E38D8E20080FCFD /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */,
+				4731B3122E38D8E20080FCFD /* XCLocalSwiftPackageReference "../../Tap2iD-VerifierSDK-iOS" */,
 			);
 			productRefGroup = 4710E7682C46335C00500F8D /* Products */;
 			projectDirPath = "";
@@ -516,7 +516,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
-				DEVELOPMENT_TEAM = YSLUPAK974;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sample",
@@ -565,7 +565,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
-				DEVELOPMENT_TEAM = YSLUPAK974;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sample",
@@ -738,21 +738,17 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		4731B3122E38D8E20080FCFD /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS";
-			requirement = {
-				branch = "Version-2.0.0";
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		4731B3122E38D8E20080FCFD /* XCLocalSwiftPackageReference "../../Tap2iD-VerifierSDK-iOS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../Tap2iD-VerifierSDK-iOS";
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		4731B3132E38D8E20080FCFD /* Tap2iD-VerifyerSDK-Swift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4731B3122E38D8E20080FCFD /* XCRemoteSwiftPackageReference "Tap2iD-VerifierSDK-iOS" */;
+			package = 4731B3122E38D8E20080FCFD /* XCLocalSwiftPackageReference "../../Tap2iD-VerifierSDK-iOS" */;
 			productName = "Tap2iD-VerifyerSDK-Swift";
 		};
 /* End XCSwiftPackageProductDependency section */

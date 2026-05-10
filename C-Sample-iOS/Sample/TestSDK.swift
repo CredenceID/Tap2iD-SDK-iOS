@@ -43,6 +43,11 @@ class TestSDK {
         }
     }
 
+    func verifyPDF417FromDL(pdf417: String,
+                            completion: @escaping (PDF417VerificationResult) -> Void) -> Error? {
+        return Tap2iDVerifySDK.shared.verifyPDF417FromDL(barcodeString: pdf417, completion: completion)
+    }
+
     func startNFCEngagement(result: @escaping (Error?) -> Void) {
         let error = Tap2iDVerifySDK.shared.verifyMdoc(engagementConfig: .nfc, delegate: self)
         if let error = error {

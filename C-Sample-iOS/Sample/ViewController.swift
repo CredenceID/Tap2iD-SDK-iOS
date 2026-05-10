@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     private var bleObserver: BLEObserver!
     private var cancellables = Set<AnyCancellable>()
     var bleState: CBManagerState = .unknown
+    private var isPDF417DLScan = false
     @IBOutlet weak var messageLabel: UILabel!
 
     override func viewDidLoad() {
@@ -45,6 +46,17 @@ class ViewController: UIViewController {
     }
 
     @IBAction func scanButtonClicked(_ sender: UIButton) {
+        isPDF417DLScan = false
+        textView.text = ""
+        imageView.image = UIImage.init(systemName: "rectangle.connected.to.line.below")
+        let qrVC = storyboard?.instantiateViewController(withIdentifier: "QRScannerViewController") as! QRScannerViewController
+        qrVC.modalPresentationStyle = .fullScreen
+        qrVC.delegate = self
+        present(qrVC, animated: true)
+    }
+
+    @IBAction func pdf417DLButtonAction(_ sender: UIButton) {
+        isPDF417DLScan = true
         textView.text = ""
         imageView.image = UIImage.init(systemName: "rectangle.connected.to.line.below")
         let qrVC = storyboard?.instantiateViewController(withIdentifier: "QRScannerViewController") as! QRScannerViewController
@@ -91,6 +103,30 @@ class ViewController: UIViewController {
 extension ViewController: QRCodeScannerDelegate {
     func qrCodeScannerResult(qrCodeResult: String?, pdf417: String?, error: String?) {
         contentView.isHidden = false
+
+        if isPDF417DLScan {
+            engagementLabel.text = "PDF417 DL Verification"
+            guard let pdf417 else {
+                DispatchQueue.main.async {
+                    self.textView.text = "\(self.textView.text ?? "")\n PDF417 DL scan requires a PDF417 barcode. \(error ?? "")"
+                }
+                return
+            }
+            DispatchQueue.global().async {
+                let invokeError = self.testSDK.verifyPDF417FromDL(pdf417: pdf417) { result in
+                    DispatchQueue.main.async {
+                        self.textView.text = self.formatPDF417Result(result)
+                    }
+                }
+                if let invokeError {
+                    DispatchQueue.main.async {
+                        self.textView.text = "\(self.textView.text ?? "")\n verifyPDF417FromDL failed: \(invokeError.localizedDescription)"
+                    }
+                }
+            }
+            return
+        }
+
         engagementLabel.text = "QRCode Engagement"
         DispatchQueue.global().async {
             if let pdf417 {
@@ -111,6 +147,29 @@ extension ViewController: QRCodeScannerDelegate {
                 }
             }
         }
+    }
+
+    private func formatPDF417Result(_ result: PDF417VerificationResult) -> String {
+        var lines: [String] = []
+        lines.append("Verdict: \(result.verdict.rawValue)")
+        lines.append("Confidence: \(result.confidenceLevel)")
+        if let stateCode = result.stateCode { lines.append("State: \(stateCode)") }
+        lines.append("CA DMV verified: \(result.cadmvVerified)")
+        lines.append("NY DMV verified: \(result.nydmvVerified)")
+        if !result.comment.isEmpty { lines.append("Comment: \(result.comment)") }
+        if !result.errors.isEmpty {
+            lines.append("Errors:")
+            for e in result.errors {
+                lines.append("  [\(e.code)] \(e.message)")
+            }
+        }
+        if !result.fields.isEmpty {
+            lines.append("Fields:")
+            for (key, value) in result.fields {
+                lines.append("  \(key): \(value ?? "nil")")
+            }
+        }
+        return lines.joined(separator: "\n")
     }
 }
 

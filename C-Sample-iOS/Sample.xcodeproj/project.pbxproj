@@ -743,8 +743,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS";
 			requirement = {
-				branch = "Version-2.0.0";
-				kind = branch;
+				kind = exactVersion;
+				version = 2.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

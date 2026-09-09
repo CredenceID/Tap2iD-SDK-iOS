@@ -92,21 +92,25 @@ extension ViewController: QRCodeScannerDelegate {
     func qrCodeScannerResult(qrCodeResult: String?, pdf417: String?, error: String?) {
         contentView.isHidden = false
         engagementLabel.text = "QRCode Engagement"
-        DispatchQueue.global().async {
-            if let pdf417 {
-                self.testSDK.startPdfEngagement(pdf417: pdf417) { error in
-                    if error != nil {
-                        DispatchQueue.main.async {
-                            self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
-                        }
-                    }
+        if let pdf417 {
+            engagementLabel.text = "PDF417 Verification"
+            textView.text = "Verifying PDF417 barcode…"
+            testSDK.startPdf417Verification(barcode: pdf417) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let pdf417Result):
+                    self.render(html: pdf417Result.toHTMLString())
+                case .failure(let error):
+                    self.render(html: Self.pdf417FailureHTML(error))
                 }
-            }else{
-                self.testSDK.startQrEngagement(capturedQr: qrCodeResult ?? "Test") { error in
-                    if error != nil {
-                        DispatchQueue.main.async {
-                            self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
-                        }
+            }
+            return
+        }
+        DispatchQueue.global().async {
+            self.testSDK.startQrEngagement(capturedQr: qrCodeResult ?? "Test") { error in
+                if error != nil {
+                    DispatchQueue.main.async {
+                        self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
                     }
                 }
             }
@@ -127,24 +131,41 @@ extension ViewController {
 extension ViewController: Tap2iDVerifySDKDelegate {
     func onVerificationCompleted(verificationResult: VerificationResult?) {
         guard let result = verificationResult else { return }
+        render(html: result.toHTMLString())
+    }
 
-        // 1. Generate HTML
-        let htmlContent = result.toHTMLString()
-
-        // 2. Render to AttributedString (on background thread for performance)
+    /// Renders an HTML report into the result text view. Parsing happens off the main
+    /// thread; the attributed string is applied back on main. Shared by the mDoc and
+    /// PDF417 result paths.
+    func render(html: String) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let data = Data(htmlContent.utf8)
-            let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
-                .documentType: NSAttributedString.DocumentType.html,
-                .characterEncoding: String.Encoding.utf8.rawValue
-            ]
-
-            let attributedString = try? NSAttributedString(data: data, options: options, documentAttributes: nil)
-
+            let attributed = Self.attributedString(fromHTML: html)
             DispatchQueue.main.async { [weak self] in
-                self?.textView.attributedText = attributedString
+                self?.textView.attributedText = attributed
             }
         }
+    }
+
+    private static func pdf417FailureHTML(_ error: Error) -> String {
+        let message = error.localizedDescription
+        let suggestion = (error as? LocalizedError)?.recoverySuggestion
+        var body = "<h2 style='color:#D32F2F;margin:0 0 12px;'>PDF417 Verification</h2>"
+        body += "<p style='font-size:15px;margin:0 0 12px;'>\(message)</p>"
+        if let suggestion = suggestion {
+            body += "<p style='font-size:13px;color:#757575;margin:0;'>\(suggestion)</p>"
+        }
+        return "<html><head><meta name='viewport' content='width=device-width, initial-scale=1'></head>"
+            + "<body style=\"font-family:-apple-system,sans-serif;padding:24px;color:#212121;\">"
+            + body + "</body></html>"
+    }
+
+    private static func attributedString(fromHTML html: String) -> NSAttributedString? {
+        let data = Data(html.utf8)
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        return try? NSAttributedString(data: data, options: options, documentAttributes: nil)
     }
 
     func onVerificationStageStarted(stage: VerificationStage) {

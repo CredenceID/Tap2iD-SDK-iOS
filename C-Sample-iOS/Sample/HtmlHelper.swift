@@ -202,6 +202,152 @@ extension VerificationResult {
     }
 }
 
+// MARK: - PDF417 Result Rendering
+
+extension Pdf417VerificationResult {
+
+    /// Renders the dedicated PDF417 classifier result as a styled HTML report,
+    /// matching the mDoc `VerificationResult` report look. Surfaces the verdict,
+    /// confidence, jurisdiction, digital-signature (crypto) outcome, disclosed
+    /// identity fields, and any classifier validation errors.
+    public func toHTMLString() -> String {
+        let css = """
+        <style>
+            :root {
+                --primary: #007AFF;
+                --success: #2E7D32;
+                --error: #D32F2F;
+                --warning: #F57C00;
+                --text-main: #212121;
+                --text-secondary: #757575;
+                --bg-main: #FFFFFF;
+                --divider: #E0E0E0;
+            }
+            html, body { background-color: var(--bg-main) !important; margin: 0; padding: 0; -webkit-text-size-adjust: none; }
+            body { font-family: -apple-system, sans-serif; padding: 24px; color: var(--text-main); line-height: 1.5; }
+            .report-container { max-width: 600px; margin: 0 auto; }
+            .main-header { text-align: center; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 2px solid var(--divider); }
+            .report-title { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-main); }
+            .report-status { margin-top: 8px; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+            .status-success { color: var(--success); }
+            .status-warning { color: var(--warning); }
+            .status-failure { color: var(--error); }
+            .group-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 1px; margin-bottom: 8px; border-bottom: 1px solid var(--divider); padding-bottom: 4px; margin-top: 24px; }
+            .data-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+            .data-row-cell { padding: 10px 0; border-bottom: 1px solid #F0F0F0; vertical-align: top; }
+            .key { color: var(--text-secondary); font-size: 14px; text-align: left; width: 45%; }
+            .value { font-weight: 500; text-align: right; color: var(--text-main); font-size: 14px; word-wrap: break-word; }
+            .check-success { color: var(--success); }
+            .check-error { color: var(--error); }
+            .error-container { background-color: #FFEBEE; padding: 16px; border-radius: 8px; margin-top: 24px; border: 1px solid #FFCDD2; }
+            .error-title { color: var(--error); font-weight: bold; font-size: 14px; margin-bottom: 8px; display: block; }
+            .error-msg { font-size: 13px; color: #B71C1C; display: block; margin-bottom: 4px; }
+        </style>
+        """
+
+        var html = "<html><head><meta name='viewport' content='width=device-width, initial-scale=1'>\(css)</head><body>"
+        html += "<div class='report-container'>"
+
+        // 1. Header — verdict drives the overall status colour.
+        let (statusClass, statusText) = verdictStatusDetails()
+        html += "<div class='main-header'>"
+        html += "<h1 class='report-title'>PDF417 Verification</h1>"
+        html += "<div class='report-status \(statusClass)'>\(statusText)</div>"
+        html += "</div>"
+
+        // 2. Summary
+        html += "<div class='group-title'>SUMMARY</div>"
+        html += Self.dataRow(key: "Verdict", value: verdict.rawValue)
+        html += Self.dataRow(key: "Confidence Level", value: "\(confidenceLevel)")
+        html += Self.dataRow(key: "State Code", value: stateCode ?? "—")
+
+        // 3. Digital signature (crypto) outcome
+        html += "<div class='group-title'>DIGITAL SIGNATURE</div>"
+        let authority = cryptoVerification.authority.isEmpty ? "None" : cryptoVerification.authority
+        html += Self.dataRow(key: "Authority", value: authority)
+        html += Self.checkRow(label: "Signature Checked", isValid: cryptoVerification.checked)
+        html += Self.checkRow(label: "Signature Verified", isValid: cryptoVerification.verified)
+        if !cryptoVerification.detail.isEmpty {
+            html += Self.dataRow(key: "Detail", value: cryptoVerification.detail)
+        }
+
+        // 4. Disclosed identity fields
+        html += "<div class='group-title'>IDENTITY DATA</div>"
+        let presentableFields = fields
+            .compactMap { key, value -> (String, String)? in
+                guard let display = Self.stringValue(from: value) else { return nil }
+                return (key, display)
+            }
+            .sorted { $0.0 < $1.0 }
+
+        if presentableFields.isEmpty {
+            html += "<p style='font-style:italic; color:#757575;'>No data attributes disclosed.</p>"
+        } else {
+            for (key, value) in presentableFields {
+                let prettyKey = key.replacingOccurrences(of: "_", with: " ").capitalized
+                html += Self.dataRow(key: prettyKey, value: value)
+            }
+        }
+
+        // 5. Errors
+        if !errors.isEmpty {
+            html += "<div class='error-container'><span class='error-title'>VALIDATION ERRORS</span>"
+            for error in errors {
+                html += "<span class='error-msg'>• [\(error.code)] \(error.message)</span>"
+            }
+            html += "</div>"
+        }
+
+        html += "</div></body></html>"
+        return html
+    }
+
+    // MARK: - Private Helpers
+
+    private func verdictStatusDetails() -> (String, String) {
+        switch verdict {
+        case .authentic:        return ("status-success", "Authentic")
+        case .likelyAuthentic:  return ("status-warning", "Likely Authentic")
+        case .likelyFraudulent: return ("status-failure", "Likely Fraudulent")
+        case .error:            return ("status-failure", "Error")
+        @unknown default:       return ("status-failure", "Unknown")
+        }
+    }
+
+    fileprivate static func stringValue(from value: Any?) -> String? {
+        guard let value = value else { return nil }
+        switch value {
+        case let data as Data:   return "[\(data.count) bytes]"
+        case let string as String: return string.isEmpty ? nil : string
+        default:                 return "\(value)"
+        }
+    }
+
+    fileprivate static func dataRow(key: String, value: String) -> String {
+        return """
+        <table class="data-table">
+            <tr>
+                <td class="data-row-cell key">\(key)</td>
+                <td class="data-row-cell value">\(value)</td>
+            </tr>
+        </table>
+        """
+    }
+
+    fileprivate static func checkRow(label: String, isValid: Bool) -> String {
+        let colorClass = isValid ? "check-success" : "check-error"
+        let icon = isValid ? "&#10003;" : "&#10007;"
+        return """
+        <table class="data-table">
+            <tr>
+                <td class="data-row-cell \(colorClass)" style="width: 25px; font-weight: bold;">\(icon)</td>
+                <td class="data-row-cell \(colorClass)" style="text-align: left; font-size: 14px;">\(label)</td>
+            </tr>
+        </table>
+        """
+    }
+}
+
 // MARK: - Utility Extensions
 
 extension UIImage {

@@ -17,6 +17,9 @@ This sample app demonstrates how to integrate and use the Tap2iD Verify SDK for 
 
 ## Features
 - **Scan QR Code:** Scan a QR code from an mDL holder app.
+- **Native NFC:** Tap an mDL holder device against the phone.
+- **External NFC Reader:** Read a credential through a reader connected over cable.
+- **Verify PDF417:** Scan the barcode on the back of a driver's licence and verify it with the on-device classifier and jurisdiction signature checks.
 - **Verify mDL License:** Verify the mDL license to ensure its authenticity.
 - **Display Results:** Show all the state information on a result screen.
 - **Result Object/Error Object:** At the end of the process, display either the result object or an error object based on the verification outcome.
@@ -33,12 +36,12 @@ To get started with the project, follow these steps:
 1. Clone the repository:
     ```sh
     
-    git clone https://github.com/CredenceID/C-Sample-iOS.git
+    git clone https://github.com/CredenceID/Tap2iD-SDK-iOS.git
     ```
 2. Navigate to the project directory:
     ```sh
     
-    cd C-Sample-iOS
+    cd Tap2iD-SDK-iOS/C-Sample-iOS
     ```
 3. Open the project in Xcode:
     ```sh

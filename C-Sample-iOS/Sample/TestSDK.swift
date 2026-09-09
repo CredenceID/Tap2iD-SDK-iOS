@@ -36,10 +36,22 @@ class TestSDK {
         }
     }
 
-    func startPdfEngagement(pdf417: String, result: @escaping (Error?) -> Void) {
-        let error = Tap2iDVerifySDK.shared.verifyMdoc(engagementConfig: .pdf417(pdf417), delegate: self)
-        if let error = error {
-            result(error)
+    /// Verifies a scanned PDF417 barcode (back of a driver's licence) using the dedicated
+    /// PDF417 classifier API. `verifyPdf417` is async, so it is wrapped in a `Task`; the
+    /// completion is delivered on the main actor.
+    ///
+    /// Unlike the mDoc engagement flow, this path does not emit `VerificationStage`
+    /// callbacks — the typed `Pdf417VerificationResult` is returned directly.
+    func startPdf417Verification(barcode: String,
+                                 completion: @escaping (Result<Pdf417VerificationResult, Error>) -> Void) {
+        Task {
+            do {
+                let request = Pdf417VerificationRequest(pdf417Value: barcode)
+                let result = try await Tap2iDVerifySDK.shared.verifyPdf417(request: request)
+                await MainActor.run { completion(.success(result)) }
+            } catch {
+                await MainActor.run { completion(.failure(error)) }
+            }
         }
     }
 

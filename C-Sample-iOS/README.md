@@ -52,9 +52,11 @@ To get started with the project, follow these steps:
     - **Using Swift Package Manager:**
       - In Xcode, select “File” → “Add Packages…”
       - Enter the URL: [https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS.git](https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS.git)
+      - Choose **Exact Version** and enter `2.2.0`. Pin exactly rather than by range, so the
+        binary the app builds against is reproducible.
       - Alternatively, you can add the following dependency to your `Package.swift`:
         ```swift
-        .package(url: "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS.git", from: "0.0.7")
+        .package(url: "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS.git", exact: "2.2.0")
         ```
 5. Build and run the project in Xcode.
 

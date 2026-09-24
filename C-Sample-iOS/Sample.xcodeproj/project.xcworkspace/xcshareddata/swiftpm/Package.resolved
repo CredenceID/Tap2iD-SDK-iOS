@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS",
       "state" : {
-        "revision" : "d137cc3eafed152acdb9b5e58172f05181e1b475",
-        "version" : "2.0.1"
+        "revision" : "79e0cd5d5d23bc7bb46ab756b4342ba3f8f797a4",
+        "version" : "2.2.0"
       }
     }
   ],

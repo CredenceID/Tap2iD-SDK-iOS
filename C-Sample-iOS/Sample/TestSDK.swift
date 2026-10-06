@@ -12,10 +12,11 @@ class TestSDK {
 
     var stateUpdate: String = ""
     var delegate: Tap2iDVerifySDKDelegate?
+    weak var proximityReaderDelegate: ProximityReaderDelegate?
 
     func initSDK(apiKey: String, result: @escaping (String?,String?, String?) -> Void) {
         let sdkConfig = CoreSdkConfig(apiKey: apiKey)
-        Tap2iDVerifySDK.shared.initSdk(config: sdkConfig) {[weak self] licenseResult in
+        let initResult: (LicenseKeyVerificationResult) -> Void = { [weak self] licenseResult in
             if let resultError = licenseResult.error {
                 result(resultError as? String ?? resultError.localizedDescription, "", licenseResult.profileName)
             }else {
@@ -27,6 +28,25 @@ class TestSDK {
                 result(licenseResult.error as? String ?? licenseResult.error?.localizedDescription, message, licenseResult.profileName)
             }
         }
+
+        Tap2iDVerifySDK.shared.initSdk(config: sdkConfig, initResult: initResult)
+    }
+
+    func isTapToPresentSupported() -> Bool {
+        Tap2iDVerifySDK.shared.isProximityReaderSupported()
+    }
+
+    func startTapToPresentDisplayRequest(result: @escaping (ProximityReaderError?) -> Void) {
+        let request = ProximityReaderRequest.display(
+            document: .driversLicense,
+            elements: [.givenName, .familyName, .ageAtLeast(21)]
+        )
+        result(Tap2iDVerifySDK.shared.verifyMdocWithEntitlement(request: request, delegate: self))
+    }
+
+    func startTapToPresentDataRequest(result: @escaping (ProximityReaderError?) -> Void) {
+        // The SDK requests the verification profile's attributes; each must be in Sample.entitlements.
+        result(Tap2iDVerifySDK.shared.verifyMdocWithEntitlement(request: .data, delegate: self))
     }
 
     func startQrEngagement(capturedQr: String, result: @escaping (Error?) -> Void) {
@@ -100,6 +120,28 @@ extension TestSDK: Tap2iDVerifySDKDelegate {
 
     func onVerificationStageCompleted(stage: VerificationStage) {
         delegate?.onVerificationStageCompleted(stage: stage)
+    }
+}
+
+extension TestSDK: ProximityReaderDelegate {
+    func onProximityReaderStageStarted(stage: ProximityReaderStage) {
+        proximityReaderDelegate?.onProximityReaderStageStarted(stage: stage)
+    }
+
+    func onProximityReaderStageCompleted(stage: ProximityReaderStage) {
+        proximityReaderDelegate?.onProximityReaderStageCompleted(stage: stage)
+    }
+
+    func onProximityReaderError(stage: ProximityReaderStage?, error: CoreCredenceErrorStruct) {
+        proximityReaderDelegate?.onProximityReaderError(stage: stage, error: error)
+    }
+
+    func onDisplayRequestCompleted(outcome: ProximityDisplayOutcome) {
+        proximityReaderDelegate?.onDisplayRequestCompleted(outcome: outcome)
+    }
+
+    func onVerificationCompleted(verificationResult: VerificationResult) {
+        proximityReaderDelegate?.onVerificationCompleted(verificationResult: verificationResult)
     }
 }
 

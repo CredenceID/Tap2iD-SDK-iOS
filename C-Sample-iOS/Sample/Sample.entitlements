@@ -6,5 +6,27 @@
 	<array>
 		<string>TAG</string>
 	</array>
+	<key>com.apple.developer.proximity-reader.identity.display</key>
+	<true/>
+	<key>com.apple.developer.proximity-reader.identity.read</key>
+	<dict>
+		<key>document-elements</key>
+		<array>
+			<string>document-expiration-date</string>
+			<string>document-issue-date</string>
+			<string>document-number</string>
+			<string>driving-privileges</string>
+			<string>issuing-authority</string>
+			<string>date-of-birth</string>
+			<string>address</string>
+			<string>portrait</string>
+			<string>family-name</string>
+			<string>given-name</string>
+		</array>
+		<key>document-types</key>
+		<array>
+			<string>drivers-license</string>
+		</array>
+	</dict>
 </dict>
 </plist>

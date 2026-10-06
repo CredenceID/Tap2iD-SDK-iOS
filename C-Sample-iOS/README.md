@@ -19,6 +19,7 @@ This sample app demonstrates how to integrate and use the Tap2iD Verify SDK for 
 - **Scan QR Code:** Scan a QR code from an mDL holder app.
 - **Native NFC:** Tap an mDL holder device against the phone.
 - **External NFC Reader:** Read a credential through a reader connected over cable.
+- **Tap to Present ID:** Read a driver's licence from Apple Wallet with Apple's Tap to Present ID — a display request, or a data request verified like an mDL.
 - **Verify PDF417:** Scan the barcode on the back of a driver's licence and verify it with the on-device classifier and jurisdiction signature checks.
 - **Verify mDL License:** Verify the mDL license to ensure its authenticity.
 - **Display Results:** Show all the state information on a result screen.
@@ -52,13 +53,18 @@ To get started with the project, follow these steps:
     - **Using Swift Package Manager:**
       - In Xcode, select “File” → “Add Packages…”
       - Enter the URL: [https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS.git](https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS.git)
-      - Choose **Exact Version** and enter `2.2.0`. Pin exactly rather than by range, so the
+      - Choose **Exact Version** and enter `2.3.0`. Pin exactly rather than by range, so the
         binary the app builds against is reproducible.
       - Alternatively, you can add the following dependency to your `Package.swift`:
         ```swift
-        .package(url: "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS.git", exact: "2.2.0")
+        .package(url: "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS.git", exact: "2.3.0")
         ```
-5. Build and run the project in Xcode.
+5. **Tap to Present ID (optional):** `Sample.entitlements` includes the Tap to Present ID
+   display and read entitlements. If your Apple Developer team has not been granted them,
+   remove the two `com.apple.developer.proximity-reader.identity.*` keys before building,
+   or the app will not sign. The buttons are disabled on devices that do not support Tap to
+   Present ID. See the [Integration Guide](https://github.com/CredenceID/Tap2iD-SDK-iOS/wiki/Guide-to-Integrate-Tap2iD-iOS-SDK#tap-to-present-id).
+6. Build and run the project in Xcode.
 
 ## Usage
 To use the app, follow these steps:

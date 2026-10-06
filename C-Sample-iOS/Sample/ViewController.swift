@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     let testSDK = TestSDK()
 
     @IBOutlet weak var nfcButton: UIButton!
+    @IBOutlet weak var tapToPresentDisplayButton: UIButton!
+    @IBOutlet weak var tapToPresentDataButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var engagementLabel: UILabel!
@@ -26,11 +28,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         testSDK.delegate = self
+        testSDK.proximityReaderDelegate = self
         bleObserver = BLEObserver()
         bleObserver.startCentralManager()
         let deviceIdentifier = testSDK.getDeviceIdentifier()
         messageLabel.text = "Tap2iD-Verify-SDK \n\nSample Version : \(UtilityManager.appVersion()) (\(UtilityManager.appBuildNumber())) \n\nDevice ID : \n\(deviceIdentifier ?? "-")"
         nfcButton.isEnabled = UIScreen.main.traitCollection.userInterfaceIdiom == .phone
+        let isTapToPresentSupported = testSDK.isTapToPresentSupported()
+        tapToPresentDisplayButton.isEnabled = isTapToPresentSupported
+        tapToPresentDataButton.isEnabled = isTapToPresentSupported
         setupTextView()
     }
 
@@ -77,6 +83,28 @@ class ViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.textView.text =  "\(self.textView.text ?? "")\n There seems to be an issue with the initialization of the SDK. Please restart the application once more to complete the configuration"
                 }
+            }
+        }
+    }
+
+    @IBAction func tapToPresentDisplayButtonAction(_ sender: UIButton) {
+        startTapToPresent(title: "Display Request") { testSDK.startTapToPresentDisplayRequest(result: $0) }
+    }
+
+    @IBAction func tapToPresentDataButtonAction(_ sender: UIButton) {
+        startTapToPresent(title: "Data Request") { testSDK.startTapToPresentDataRequest(result: $0) }
+    }
+
+    private func startTapToPresent(title: String, start: (@escaping (ProximityReaderError?) -> Void) -> Void) {
+        textView.text = ""
+        imageView.image = UIImage.init(systemName: "wave.3.right")
+        contentView.isHidden = false
+        engagementLabel.text = title
+        start { [weak self] error in
+            guard let self = self, let error = error else { return }
+            switch error {
+            case .sdkNotInitialized:
+                self.textView.text = "The SDK is not initialized. Please restart the application once more to complete the configuration"
             }
         }
     }
@@ -214,6 +242,28 @@ extension ViewController: Tap2iDVerifySDKDelegate {
             return image
         }
         return nil
+    }
+}
+
+extension ViewController: ProximityReaderDelegate {
+    func onProximityReaderStageStarted(stage: ProximityReaderStage) {
+        textView.text = "\(textView.text ?? "")\n Started : \(stage)"
+    }
+
+    func onProximityReaderStageCompleted(stage: ProximityReaderStage) {
+        textView.text = "\(textView.text ?? "")\n Completed : \(stage)"
+    }
+
+    func onProximityReaderError(stage: ProximityReaderStage?, error: CoreCredenceErrorStruct) {
+        textView.text = "\(textView.text ?? "")\n\n Error = \(error.errorMessage)"
+    }
+
+    func onDisplayRequestCompleted(outcome: ProximityDisplayOutcome) {
+        textView.text = "\(textView.text ?? "")\n\n Display request \(outcome)"
+    }
+
+    func onVerificationCompleted(verificationResult: VerificationResult) {
+        render(html: verificationResult.toHTMLString())
     }
 }
 

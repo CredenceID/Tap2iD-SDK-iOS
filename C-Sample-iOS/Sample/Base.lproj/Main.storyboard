@@ -222,6 +222,22 @@
                                     <action selector="nfcReaderButtonAction:" destination="HWM-5H-7dz" eventType="touchUpInside" id="XvV-VB-oHs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TpI-d4-Btn">
+                                <rect key="frame" x="86.5" y="543.6666666666667" width="220" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Tap to Present: Display"/>
+                                <connections>
+                                    <action selector="tapToPresentDisplayButtonAction:" destination="HWM-5H-7dz" eventType="touchUpInside" id="TpI-aC-t01"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TpI-d5-Btn">
+                                <rect key="frame" x="96.5" y="588.6666666666667" width="200" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Tap to Present: Data"/>
+                                <connections>
+                                    <action selector="tapToPresentDataButtonAction:" destination="HWM-5H-7dz" eventType="touchUpInside" id="TpI-aC-t02"/>
+                                </connections>
+                            </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CgZ-xV-mE5">
                                 <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                                 <subviews>
@@ -273,6 +289,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="QIM-gA-hrX" firstAttribute="top" secondItem="oJJ-K0-zHd" secondAttribute="bottom" constant="10" id="Isf-yq-hZD"/>
+                            <constraint firstItem="TpI-d4-Btn" firstAttribute="top" secondItem="QIM-gA-hrX" secondAttribute="bottom" constant="10" id="TpI-cT-p01"/>
+                            <constraint firstItem="TpI-d4-Btn" firstAttribute="centerX" secondItem="PoJ-9h-9lR" secondAttribute="centerX" id="TpI-cX-p02"/>
+                            <constraint firstItem="TpI-d5-Btn" firstAttribute="top" secondItem="TpI-d4-Btn" secondAttribute="bottom" constant="10" id="TpI-cT-p03"/>
+                            <constraint firstItem="TpI-d5-Btn" firstAttribute="centerX" secondItem="PoJ-9h-9lR" secondAttribute="centerX" id="TpI-cX-p04"/>
                             <constraint firstItem="HzQ-M8-rbH" firstAttribute="top" secondItem="GxJ-KL-ePn" secondAttribute="bottom" constant="20" id="Li9-Fw-vDt"/>
                             <constraint firstItem="GxJ-KL-ePn" firstAttribute="leading" secondItem="6xh-pe-EuL" secondAttribute="leading" constant="20" id="NQB-P9-OKx"/>
                             <constraint firstItem="CgZ-xV-mE5" firstAttribute="top" secondItem="6xh-pe-EuL" secondAttribute="top" id="Q6a-BO-GWA"/>
@@ -293,6 +313,8 @@
                         <outlet property="imageView" destination="uZV-6f-Hof" id="NkR-TV-fIe"/>
                         <outlet property="messageLabel" destination="GxJ-KL-ePn" id="cJo-bb-dHF"/>
                         <outlet property="nfcButton" destination="oJJ-K0-zHd" id="e8V-Ay-wxa"/>
+                        <outlet property="tapToPresentDisplayButton" destination="TpI-d4-Btn" id="TpI-oU-t01"/>
+                        <outlet property="tapToPresentDataButton" destination="TpI-d5-Btn" id="TpI-oU-t02"/>
                         <outlet property="textView" destination="paf-4C-l7M" id="5Wy-gm-CN9"/>
                     </connections>
                 </viewController>

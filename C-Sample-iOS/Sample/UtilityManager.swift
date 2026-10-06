@@ -10,7 +10,7 @@ import UIKit
 
 class UtilityManager {
 
-    private static let sdkVersion = "2.2.0"
+    private static let sdkVersion = "2.3.0"
 
     static func appVersion() -> String {
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {

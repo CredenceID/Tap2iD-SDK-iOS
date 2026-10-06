@@ -744,7 +744,7 @@
 			repositoryURL = "https://github.com/CredenceID/Tap2iD-VerifierSDK-iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.0;
+				version = 2.3.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

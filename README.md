@@ -29,7 +29,9 @@ Available for Android, iOS, and Windows desktop, the SDK allows seamless integra
 - [Sample App](C-Sample-iOS)
 
 ### Device Compatibility Overview: QRCode, Native NFC, and External NFC Reader
-![diagram](https://github.com/user-attachments/assets/ef57af75-5355-4a20-9d0e-b161db3a8341)
+<img width="2000" height="1416" alt="iOS_SDK_landingpage" src="https://github.com/user-attachments/assets/5e392f7b-6de0-4b51-900b-a70aeb3b59ad" />
+
+
 
 ---
 © 2026 Credence ID LLC. All rights reserved.
